@@ -1,3 +1,5 @@
+import { setAccessToken } from "./accessTokenStore";
+
 export const UserEmailVerify = async (email: string, otp: string) => {
   if (otp.length == 6) {
     const query = new URLSearchParams({
@@ -5,6 +7,7 @@ export const UserEmailVerify = async (email: string, otp: string) => {
       otp: otp,
     });
 
+    console.log("  ## ");
     const response = await fetch(
       `http://localhost:8081/api/v1/email-verify?${query}`,
       {
@@ -14,17 +17,17 @@ export const UserEmailVerify = async (email: string, otp: string) => {
         },
       }
     );
+
     const jsonRes = await response.json();
+
     console.log(jsonRes);
     if (jsonRes.status == true) {
+      setAccessToken(jsonRes.accessToken);
+      return true;
     } else {
-      return {
-        err: jsonRes.message,
-      };
+      return false;
     }
   } else {
-    return {
-      err: "invalid otp",
-    };
+    return false;
   }
 };

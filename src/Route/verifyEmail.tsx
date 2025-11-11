@@ -1,5 +1,4 @@
-"use client";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../components/LiquidGlass/Button";
 import { OtpBox } from "../components/otpBox";
 import { useRef, useState } from "react";
@@ -15,11 +14,12 @@ export default function VerifyEmail() {
   const otpRef5 = useRef<HTMLInputElement>(null);
 
   const [inputError, setInputError] = useState(false);
-  const [TypedOtp, setTypedOtp] = useState("");
   const { state } = useLocation();
   const { email } = state;
 
-  const otpStringify = async () => {
+  const navigate = useNavigate();
+
+  const otpVerify = async () => {
     const finalOtp = [
       otpRef0.current?.value,
       otpRef1.current?.value,
@@ -30,13 +30,15 @@ export default function VerifyEmail() {
     ].join("");
     if (finalOtp.length == 6) {
       setInputError(false);
-      setTypedOtp(finalOtp);
-      const res = await UserEmailVerify(email, TypedOtp);
-      setInputError(true);
-      console.log(res);
+      const resp = await UserEmailVerify(email, finalOtp);
+      console.log(resp);
+      if (resp) {
+        navigate("/dashboard", { replace: true });
+      } else {
+        setInputError(true);
+      }
     } else {
       setInputError(true);
-      setTypedOtp("");
     }
   };
   return (
@@ -89,7 +91,7 @@ export default function VerifyEmail() {
             <Button
               className={` justify-center items-center flex text-5xl `}
               onClick={async () => {
-                await otpStringify();
+                otpVerify();
               }}
             >
               Click to Verify

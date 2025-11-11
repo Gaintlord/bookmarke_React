@@ -1,6 +1,6 @@
 import { inputValidation } from "./inputValidation";
-
-export const userSignup = async (
+import { setAccessToken } from "../utils/accessTokenStore";
+export const userLogin = async (
   email: string,
   password: string
 ): Promise<{
@@ -10,12 +10,13 @@ export const userSignup = async (
 }> => {
   const response = inputValidation(email, password);
   if (!response.status) {
+    console.log("### inavliddddddddd #####");
     return {
       type: response.type,
       err: response.err,
     };
   } else {
-    const response = await fetch("http://localhost:8081/api/v1/signup", {
+    const response = await fetch("http://localhost:8081/api/v1/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,20 +25,23 @@ export const userSignup = async (
         userEmail: email,
         userPassword: password,
       }),
+      credentials: "include",
     });
 
     const resJson = await response.json();
-    // console.log(resJson.status);
+
     if (resJson.status) {
+      console.log("## user logined in  ##");
+      setAccessToken(resJson.accessToken);
       return {
         status: true,
-        type: "signup successfull",
-        err: resJson.message,
+        type: "loged in successfull",
+        err: "none",
       };
     } else {
       return {
-        type: "email",
-        err: "user exist",
+        type: "Login error",
+        err: "Invalid Request",
       };
     }
   }

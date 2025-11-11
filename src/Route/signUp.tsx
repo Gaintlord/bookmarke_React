@@ -36,6 +36,7 @@ export default function SignUp() {
       setPassIsNull(false);
     }
     const response = await userSignup(email, password);
+    console.log(response);
     if (response?.status) {
       setPassIsError(false);
       setEmailIsError(false);

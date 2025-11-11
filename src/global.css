@@ -74,3 +74,9 @@ body {
   font-style: normal;
   font-optical-sizing: auto;
 }
+
+.oswald-bold {
+  font-family: "Oswald";
+  font-weight: 600;
+  font-style: normal;
+}

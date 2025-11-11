@@ -1,7 +1,7 @@
 import { GradiantButton } from "../components/GradiantBorder/gradiantButton";
 import { ModernInput } from "../components/modernInput";
 import { useRef, useState } from "react";
-import { userSignup } from "../utils/userSignup";
+import { userLogin } from "../utils/userLogin";
 import EmailIcon from "../accets/svgs/emailIcon";
 import PasswordIcon from "../accets/svgs/passwordIcon";
 import { HomeLogoAncher } from "../components/homeLogoAncher";
@@ -21,7 +21,7 @@ export default function Login() {
   const [passError, setPassIsError] = useState(false);
   const [userPassError, setUserPassError] = useState("");
 
-  const userSignupController = async (email: string, password: string) => {
+  const userLoginController = async (email: string, password: string) => {
     if (email == "") {
       setEmailIsNull(true);
     } else {
@@ -32,7 +32,7 @@ export default function Login() {
     } else {
       setPassIsNull(false);
     }
-    const response = await userSignup(email, password);
+    const response = await userLogin(email, password);
     if (response?.status) {
       setPassIsError(false);
       setEmailIsError(false);
@@ -44,6 +44,9 @@ export default function Login() {
       if (response.type == "password") {
         setPassIsError(true);
         setUserPassError(response.err);
+      } else {
+        setEmailIsError(true);
+        setPassIsError(true);
       }
     }
   };
@@ -58,7 +61,7 @@ export default function Login() {
           </div>
           <div className="flex-3 flex items-center justify-end flex-row font-mono text-blue-950">
             <div className="mx-[5%]">
-              <a>login</a>
+              <a>Sign up</a>
             </div>
             <div>
               <a>Download</a>
@@ -113,13 +116,13 @@ export default function Login() {
               className="w-[25%] mt-6 rounded-md bg-[rgb(213,231,235)] text-xl text-center text-blue-950 p-1 inset-shadow-2xs cursor-pointer shadow-2xl ring-1
             active:translate-y-1 duration-200"
               onClick={async () => {
-                await userSignupController(
+                await userLoginController(
                   emailRef.current?.value ?? "s",
                   passwordRef.current?.value ?? "s"
                 );
               }}
             >
-              sign up
+              Login
             </div>
           </div>
           {/*other Signup function  */}

@@ -1,40 +1,33 @@
-import { LeftArrow } from "../accets/svgs/leftArrow";
-import type React from "react";
-import { MenuBar } from "../accets/svgs/menuBar";
+import { HomeLogoAncher } from "./homeLogoAncher";
 
-export const SideBar = (props: {
-  sideBarToggle: boolean;
-  setSideBartoggle: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
-  const changeSidebar = () => {
-    props.setSideBartoggle(!props.sideBarToggle);
+export const DashBoardSideBar = ({
+  sideBarState,
+}: {
+  sideBarState: {
+    sideBar: boolean;
+    setSideBar: React.Dispatch<React.SetStateAction<boolean>>;
   };
+}) => {
+  // const changeSidebar = () => {
+  //   sideBarState.setSideBar(!sideBarState.setSideBar);
+  // };
   return (
     <>
-      <div className="w-50% h-full  flex flex-col bg-gray-50">
-        {/* head */}
-        <div
-          className={`m-4 -mb-8 flex-1 flex flex-row items-start justify-between `}
-        >
-          <div className={`${props.sideBarToggle ? `` : `hidden`} m-2 w-[50%]`}>
-            <img src="LogoWText.png" />
+      <div className="bg-violet-300 h-full p-4 flex flex-col">
+        {/* Header */}
+        <div className="flex items-center justify-between ">
+          <div className="w-[75%]">
+            <HomeLogoAncher />
           </div>
-          <div
-            className="cursor-pointer bg-black/40"
-            onClick={() => changeSidebar()}
-          >
-            {props.sideBarToggle ? <LeftArrow /> : <MenuBar />}
-          </div>
+          <div className=""> x- </div>
         </div>
-        {/* misc */}
-        <div className="bg-green-300 mb-3 mx-3 flex-3">misc</div>
-        {/* social */}
-        <div className="bg-blue-400 m-3 flex-3">social</div>
-        {/* tinkering */}
-        <div className="bg-violet-400 m-3 flex-1">tink</div>
+        {/* rest of SideBar */}
+        <div className="bg-green-200 my-10">
+          <div></div>
+        </div>
       </div>
     </>
   );
 };
 
-export default SideBar;
+export default DashBoardSideBar;
