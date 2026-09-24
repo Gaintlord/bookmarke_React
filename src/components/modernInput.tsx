@@ -1,4 +1,6 @@
 // import { VisibleEye } from "../accets/svgs/passwordEye";
+import { useState } from "react";
+import { ClosedEye, OpenEye } from "../accets/svgs/passwordEye";
 import QuestionMark from "../accets/svgs/questionMark";
 
 export const ModernInput = ({
@@ -12,6 +14,7 @@ export const ModernInput = ({
   isNull,
   isError,
   userError,
+  forPassword,
 }: {
   placeholder: string;
   type: string;
@@ -23,7 +26,10 @@ export const ModernInput = ({
   isNull?: boolean;
   isError?: boolean;
   userError?: string;
+  forPassword?: boolean;
 }) => {
+  const [showPass, setShowPass] = useState(false);
+
   return (
     <>
       <div className={` text-black w-full max-h-max ${className} `}>
@@ -47,22 +53,41 @@ export const ModernInput = ({
               ${isNull || isError ? `ring-red-400` : `ring-gray-400`}`}
           >
             {/* TypeIcon */}
-            <div className="size-5 mx-2 opacity-55 ">{typeIcon}</div>
+            <div className="size-5 mx-2  flex opacity-55 ">{typeIcon}</div>
             {/* Input */}
             <input
               placeholder={placeholder}
-              type={type}
+              type={showPass ? "text" : type}
               ref={propRef}
-              className="w-full placeholder:text-gray-300 place pl-2 pr-12 py-1 focus:outline-none"
+              className="w-full placeholder:text-gray-300 place pl-2 pr-12 py-1 focus:outline-none "
             />
-            <div className="peer size-5 mr-5 cursor-pointer">
-              <span className="peer opacity-55  text-red-500">
+
+            {forPassword ? (
+              <span
+                className="w-8"
+                onClick={() => {
+                  setShowPass(!showPass);
+                }}
+              >
+                {showPass ? (
+                  <OpenEye />
+                ) : (
+                  <div className="pt-2">
+                    <ClosedEye />
+                  </div>
+                )}
+              </span>
+            ) : (
+              <></>
+            )}
+            <div className="peer size-6 mx-4  cursor-pointer">
+              <span className="peer opacity-55  text-red-500 group">
                 <QuestionMark
                   strokeColor={`${isNull || isError ? "#ff0000" : "#000000"}`}
                 ></QuestionMark>
-                <span className="bg-black/60 font-bold rounded-md text-white/95 text-sm w-max px-3 text-center opacity-0  peer-hover:opacity-100  transition-opacity pointer-events-none duration-300">
+                <div className="bg-black -mt-12 -ml-6 font-bold rounded-md text-white text-sm w-max px-3 text-center opacity-0 group-hover:opacity-100 duration-300">
                   {toolTipMsg}
-                </span>
+                </div>
               </span>
             </div>
           </div>

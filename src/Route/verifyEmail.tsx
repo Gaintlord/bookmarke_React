@@ -45,11 +45,10 @@ export default function VerifyEmail() {
     <>
       <div className="w-full h-screen bg-blue-50 flex">
         <div className="gradient w-[96%] h-[92%] m-auto rounded-2xl shadow-2xl bg-white flex flex-col">
-          {" "}
-          <div className="oswald flex-1 mx-[20%] mt-[3%] justify-center items-center flex text-8xl text-gray-700 font-sans">
+          <div className="suse-mono flex-2 mx-[20%] mt-[3%] justify-center items-center flex text-5xl text-gray-700 font-sans">
             Verify your OTP
           </div>
-          <div className=" flex-8 mx-[20%] py-[5%] flex items-center justify-center ">
+          <div className=" flex-6 mx-[20%] my-8  flex  justify-center ">
             <OtpBox
               reff={otpRef0}
               nextreff={otpRef1}
@@ -87,7 +86,7 @@ export default function VerifyEmail() {
               isInputError={inputError}
             ></OtpBox>
           </div>
-          <div className=" justify-center flex  flex-4 mx-[20%] mb-[1%]">
+          <div className=" justify-center flex  flex-5 mx-[20%] mb-[1%]">
             <Button
               className={` justify-center items-center flex text-5xl `}
               onClick={async () => {

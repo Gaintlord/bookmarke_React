@@ -31,6 +31,8 @@ export const userLogin = async (
 
     if (resJson.status) {
       setAccessToken(resJson.accessToken);
+      console.log("!!!!! message sent!!!!!");
+
       window.postMessage(
         {
           type: "set_tags",

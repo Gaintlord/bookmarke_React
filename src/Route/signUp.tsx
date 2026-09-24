@@ -53,6 +53,11 @@ export default function SignUp() {
     }
   };
 
+  const SendUserToOauth = () => {
+    window.location.href = "http://localhost:8081/api/v1/auth/google";
+    console.log("sent to backend");
+  };
+
   return (
     <>
       <div className="h-screen w-full flex flex-col bg-white">
@@ -72,7 +77,7 @@ export default function SignUp() {
             <div></div>
           </div>
           <div className="flex-1 flex z-0 items-center justify-end  mr-[8%] flex-row">
-            <Link to="/login" replace={true}>
+            <Link to="/Login" replace={true}>
               <GradiantButton>Login</GradiantButton>
             </Link>
           </div>
@@ -106,6 +111,7 @@ export default function SignUp() {
                 placeholder="password123"
                 forType="Password"
                 type="password"
+                forPassword
                 toolTipMsg="Enter a alpha-numaric password"
                 typeIcon={<PasswordIcon />}
                 className="text-xl"
@@ -134,7 +140,10 @@ export default function SignUp() {
               <span className="px-3 text-gray-500 text-sm">OR</span>
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
-            <div className="flex w-[25%]">
+            <div
+              className="flex w-[25%] cursor-pointer"
+              onClick={() => SendUserToOauth()}
+            >
               <SignInOptions
                 className=" text-black/75 border-1 border-black/50 cursor-pointer"
                 type="Google"

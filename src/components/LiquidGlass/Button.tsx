@@ -39,8 +39,8 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <button
-      className={`liquid-glass text-white flex text-center
-        shadow-2xl max-h-max font-bold py-3 px-10 rounded-lg ${className}`}
+      className={`suse-bold  liquid-glass text-white flex text-center
+        shadow-2xl max-h-min  py-3 px-10 rounded-md ${className}`}
       onClick={handleClick}
     >
       {children}

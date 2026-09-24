@@ -1,16 +1,6 @@
 import { HomeLogoAncher } from "./homeLogoAncher";
 
-export const DashBoardSideBar = ({
-  sideBarState,
-}: {
-  sideBarState: {
-    sideBar: boolean;
-    setSideBar: React.Dispatch<React.SetStateAction<boolean>>;
-  };
-}) => {
-  // const changeSidebar = () => {
-  //   sideBarState.setSideBar(!sideBarState.setSideBar);
-  // };
+export const DashBoardSideBar = () => {
   return (
     <>
       <div className="bg-violet-300 h-full p-4 flex flex-col">

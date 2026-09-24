@@ -7,9 +7,11 @@ import PasswordIcon from "../accets/svgs/passwordIcon";
 import { HomeLogoAncher } from "../components/homeLogoAncher";
 import { SignInOptions } from "../components/signInOptions";
 import GoogleIcon from "../accets/svgs/googleIcon";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Login() {
+  const navigate = useNavigate();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
 
@@ -36,6 +38,7 @@ export default function Login() {
     if (response?.status) {
       setPassIsError(false);
       setEmailIsError(false);
+      navigate("/dashboard", { replace: true });
     } else {
       if (response.type == "email") {
         setEmailIsError(true);
@@ -103,6 +106,7 @@ export default function Login() {
                 propRef={passwordRef}
                 placeholder="password123"
                 forType="Password"
+                forPassword={true}
                 type="password"
                 toolTipMsg="Enter a alpha-numaric password"
                 typeIcon={<PasswordIcon />}
@@ -118,7 +122,7 @@ export default function Login() {
               onClick={async () => {
                 await userLoginController(
                   emailRef.current?.value ?? "s",
-                  passwordRef.current?.value ?? "s"
+                  passwordRef.current?.value ?? "s",
                 );
               }}
             >

@@ -1,4 +1,8 @@
-import type { RefObject } from "react";
+import type {
+  ChangeEvent,
+  KeyboardEvent,
+  RefObject,
+} from "react";
 
 export const OtpBox = (props: {
   reff: RefObject<HTMLInputElement | null>;
@@ -6,7 +10,10 @@ export const OtpBox = (props: {
   prevreff: RefObject<HTMLInputElement | null> | null;
   isInputError?: boolean;
 }) => {
-  const handleEnter = (e: any, nextreff: any) => {
+  const handleEnter = (
+    e: ChangeEvent<HTMLInputElement>,
+    nextreff: RefObject<HTMLInputElement | null> | null,
+  ) => {
     const value = e.target.value;
 
     // Only allow single digit
@@ -24,7 +31,7 @@ export const OtpBox = (props: {
     ) {
       e.target.value = value;
     } else {
-      e.target.value = null;
+      e.target.value = "";
       return;
     }
 
@@ -33,7 +40,10 @@ export const OtpBox = (props: {
       nextreff.current.focus();
     }
   };
-  const backSpace = (e: any, prevreff: any) => {
+  const backSpace = (
+    e: KeyboardEvent<HTMLInputElement>,
+    prevreff: RefObject<HTMLInputElement | null> | null,
+  ) => {
     if (
       e.key === "Backspace" &&
       e.currentTarget.value === "" &&
@@ -44,7 +54,7 @@ export const OtpBox = (props: {
   };
   return (
     <>
-      <div className="w-1/12 h-2/5 flex m-[2%] ">
+      <div className="oswald-bold w-20 h-34 flex m-[2%] ">
         <input
           onChange={(e) => handleEnter(e, props.nextreff)}
           onKeyDown={(e) => {
@@ -55,7 +65,7 @@ export const OtpBox = (props: {
           inputMode="numeric"
           pattern="[0-9]*"
           maxLength={1}
-          className={`bg-black/5 rounded-xl shadow-xl w-full h-full border-blue-200 border-2 text-[500%] text-center items-center text-black/90 caret-transparent focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-400/50
+          className={`bg-black/5 rounded-md shadow-xl w-full h-full border-blue-200 border-2 text-[500%] text-center items-center text-black/90 caret-transparent focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-400/50
           ${props.isInputError ? `border-red-600 ` : `border-blue-200 `}`}
         />
       </div>

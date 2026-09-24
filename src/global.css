@@ -77,6 +77,25 @@ body {
 
 .oswald-bold {
   font-family: "Oswald";
+  font-weight: 500;
+  font-style: normal;
+}
+.oswald-xbold {
+  font-family: "Oswald";
   font-weight: 600;
   font-style: normal;
+}
+
+.suse-mono {
+  font-family: "SUSE Mono", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.suse-bold {
+  font-family: "SUSE";
+  font-weight: 600;
+  font-style: normal;
+  font-optical-sizing: auto;
 }
