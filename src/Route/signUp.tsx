@@ -9,6 +9,7 @@ import GoogleIcon from "../accets/svgs/googleIcon";
 
 import { useRef, useState } from "react";
 import { userSignup } from "../utils/userSignup";
+import { apiUrl } from "../utils/apiConfig";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
@@ -54,7 +55,7 @@ export default function SignUp() {
   };
 
   const SendUserToOauth = () => {
-    window.location.href = "http://localhost:8081/api/v1/auth/google";
+    window.location.href = apiUrl("/api/v1/auth/google");
     console.log("sent to backend");
   };
 

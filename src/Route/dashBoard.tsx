@@ -3,11 +3,13 @@ import type { FormEvent } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { WebsitesCard } from "../components/websiteCard/WebsiteCard";
 import { clearAccessToken, getAccessToken } from "../utils/accessTokenStore";
+import { HomeLogoAncher } from "../components/homeLogoAncher";
 import {
   fetchBookmarkSummary,
   type BookmarkSummary,
 } from "../utils/dashboardBookmarkSummary";
 import { getDomainColorClass, toColorClass } from "../utils/domainColor";
+import { saveDomainColors } from "../utils/domainColorStore";
 
 type BookmarkCollection = {
   domainName: string;
@@ -31,7 +33,7 @@ const formatLastSaved = (isoDate: string) => {
 
 const toCollection = (summary: BookmarkSummary): BookmarkCollection => ({
   domainName: summary.website,
-  color: toColorClass(summary.color),
+  color: toColorClass(summary.color)[1],
   totalbokmarke: String(summary.totalBookmarks),
   lastSaved: formatLastSaved(summary.latestDate),
   images: summary.latestImageLinks ?? [],
@@ -69,6 +71,7 @@ const Dashboard = () => {
     fetchBookmarkSummary()
       .then((summaries) => {
         if (cancelled) return;
+        saveDomainColors(summaries);
         setCollections(summaries.map(toCollection));
       })
       .catch((error: Error & { status?: number }) => {
@@ -112,7 +115,7 @@ const Dashboard = () => {
       setCollections((current) => [
         {
           domainName,
-          color: getDomainColorClass(domainName),
+          color: getDomainColorClass(domainName)[1],
           totalbokmarke: "1",
           lastSaved: formatLastSaved(new Date().toISOString()),
           images: [],
@@ -131,7 +134,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-blue-50 text-blue-950">
       <header className="sticky top-0 z-30 border-b-2 border-blue-100 bg-white/95 shadow-sm backdrop-blur">
         <div className="mx-auto flex min-h-18 max-w-7xl flex-wrap items-center gap-3 px-4 py-3 sm:flex-nowrap sm:px-6">
-          {/* <HomeLogoAncher className="w-30 shrink-0 sm:w-36" /> */}
+          <HomeLogoAncher className="w-30 shrink-0 sm:w-36" />
           <label className="relative order-3 w-full sm:order-2 sm:ml-auto sm:max-w-md">
             <span className="sr-only">Search bookmark collections</span>
             <svg
@@ -281,16 +284,24 @@ const Dashboard = () => {
           <div
             className={
               viewMode === "grid"
-                ? "flex flex-wrap justify-center sm:justify-start"
+                ? "flex flex-wrap justify-center sm:justify-start p-2"
                 : "flex flex-col items-center"
             }
           >
             {visibleCollections.map((collection) => (
               <div
-                className={viewMode === "list" ? "w-full max-w-md" : ""}
+                className={viewMode === "list" ? "w-full max-w-md m-5" : "m-5"}
                 key={collection.domainName}
               >
-                <WebsitesCard {...collection} />
+                <WebsitesCard
+                  {...collection}
+                  layout={viewMode}
+                  onOpen={() =>
+                    navigate(
+                      `/bokmarke?domain=${encodeURIComponent(collection.domainName)}`,
+                    )
+                  }
+                />
               </div>
             ))}
           </div>

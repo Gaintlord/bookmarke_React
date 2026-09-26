@@ -2,17 +2,21 @@ import { getAccessToken } from "./accessTokenStore";
 import { refreshSession } from "./refreshSession";
 import { apiUrl } from "./apiConfig";
 
-export type BookmarkSummary = {
-  website: string;
-  totalBookmarks: number;
-  latestDate: string;
-  latestImageLinks: string[];
-  color: string;
+export type DomainBookmark = {
+  image: string;
+  link: string;
+  addedAtDate: string;
 };
 
-export const fetchBookmarkSummary = async (): Promise<BookmarkSummary[]> => {
+export const fetchBookmarksByDomain = async (
+  domain: string,
+): Promise<DomainBookmark[]> => {
+  const url = apiUrl(
+    `/api/v1/bookmarks?domain=${encodeURIComponent(domain)}`,
+  );
+
   const request = () =>
-    fetch(apiUrl("/api/v1/dashboard/bookmark-summary"), {
+    fetch(url, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${getAccessToken()}`,
@@ -27,7 +31,7 @@ export const fetchBookmarkSummary = async (): Promise<BookmarkSummary[]> => {
   }
 
   if (!response.ok) {
-    const error = new Error("Unable to load dashboard bookmarks") as Error & {
+    const error = new Error("Unable to load bookmarks") as Error & {
       status?: number;
     };
     error.status = response.status;

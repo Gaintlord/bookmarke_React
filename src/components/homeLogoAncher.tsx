@@ -1,11 +1,18 @@
 import { Link } from "react-router-dom";
 
-export const HomeLogoAncher = ({ className = "" }) => {
+export const HomeLogoAncher = ({
+  className = "",
+  disableLink = false,
+}) => {
   return (
     <div className={`${className}`}>
-      <Link to="/" replace={true}>
+      {disableLink ? (
         <img className={`block w-full`} src={"LogoWText.png"}></img>
-      </Link>
+      ) : (
+        <Link to="/" replace={true}>
+          <img className={`block w-full`} src={"LogoWText.png"}></img>
+        </Link>
+      )}
     </div>
   );
 };

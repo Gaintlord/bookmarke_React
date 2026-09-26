@@ -1,0 +1,28 @@
+.shineEffect {
+  overflow: hidden;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.shineEffect::after {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 10%;
+  top: 0;
+  left: -50%;
+  background-color: rgba(0, 0, 0, 0.1);
+  transform: skewX(10deg);
+  transition: 400ms;
+  filter: blur(5px);
+}
+
+.shineEffect:active::after {
+  left: calc(100% + 100px);
+}

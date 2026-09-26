@@ -1,4 +1,5 @@
 import { setAccessToken } from "./accessTokenStore";
+import { apiUrl } from "./apiConfig";
 
 let inFlight: Promise<boolean> | null = null;
 
@@ -8,7 +9,7 @@ export const refreshSession = (): Promise<boolean> => {
   inFlight = (async () => {
     try {
       const response = await fetch(
-        "http://localhost:8081/api/v1/auth/refresh",
+        apiUrl("/api/v1/auth/refresh"),
         {
           method: "GET",
           credentials: "include",

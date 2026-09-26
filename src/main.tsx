@@ -8,6 +8,7 @@ const VerifyEmail = lazy(() => import("./Route/verifyEmail.tsx"));
 const SignUp = lazy(() => import("./Route/signUp.tsx"));
 const Login = lazy(() => import("./Route/LogIn.tsx"));
 const Dashboard = lazy(() => import("./Route/dashBoard.tsx"));
+const Bokmarke = lazy(() => import("./Route/Bokmarke.tsx"));
 
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
@@ -15,6 +16,7 @@ const router = createBrowserRouter([
   { path: "/Login", element: <Login /> },
   { path: "/verifyemail", element: <VerifyEmail /> },
   { path: "/dashboard", element: <Dashboard /> },
+  { path: "/bokmarke", element: <Bokmarke /> },
 ]);
 
 createRoot(document.getElementById("root")!).render(

@@ -1,4 +1,5 @@
 import { inputValidation } from "./inputValidation";
+import { apiUrl } from "./apiConfig";
 
 export const userSignup = async (
   email: string,
@@ -15,7 +16,7 @@ export const userSignup = async (
       err: response.err,
     };
   } else {
-    const response = await fetch("http://localhost:8081/api/v1/signup", {
+    const response = await fetch(apiUrl("/api/v1/signup"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

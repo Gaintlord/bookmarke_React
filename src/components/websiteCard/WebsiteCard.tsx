@@ -9,21 +9,38 @@ export const WebsitesCard = ({
   totalbokmarke,
   lastSaved,
   images,
+  layout = "grid",
+  onOpen,
 }: {
   domainName: string;
   color: string;
   totalbokmarke: string;
   lastSaved: string;
   images: string[];
+  layout?: "grid" | "list";
+  onOpen?: () => void;
 }) => {
   const domain = domainName.split(".");
+  const isList = layout === "list";
   return (
-    <div className="relative h-80 w-56 m-10 bg-gray-400 rounded-bl-xl rounded-2xl shadow-xl border-2 border-black hover:scale-105 duration-300">
+    <div
+      className={`relative bg-gray-400 rounded-bl-xl rounded-2xl shadow-xl border-2 border-black hover:scale-105 duration-300 ${isList ? "h-[213px] w-[28rem] max-w-full" : "h-80 w-56"}`}
+    >
       <div
         className={`shineEffect absolute h-full w-full -top-2 -right-2 ${color}  rounded-xl cursor-pointer  active:translate-y-2 active:-translate-x-2 duration-400 border-black border-2`}
+        onClick={onOpen}
+        onKeyDown={(event) => {
+          if (!onOpen) return;
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            onOpen();
+          }
+        }}
+        role={onOpen ? "button" : undefined}
+        tabIndex={onOpen ? 0 : undefined}
       >
         <div className="h-full flex flex-col rounded-xl mx-2">
-          <div className="px-2 flex-2 flex">
+          <div className={`px-2 flex ${isList ? "flex-none h-16" : "flex-2"}`}>
             <div className="flex-1 flex flex-row">
               <div className="flex-1 flex justify-center items-center">
                 <div className="relative bg-white rounded-full h-12 w-12 flex justify-center items-center z-0  shadow-2xl">
@@ -42,7 +59,14 @@ export const WebsitesCard = ({
               </div>
             </div>
           </div>
-          <div className="flex-3 my-5 flex items-start justify-center">
+          <div
+            className={
+              isList
+                ? "flex-1 min-h-0 flex flex-row items-center gap-4 px-2"
+                : "contents"
+            }
+          >
+            <div className="flex-3 my-5 flex items-start justify-center">
             <div className="relative w-42 h-24 group ">
               {images[2] && (
                 <div className="size-full opacity-75 absolute top-0 left-0 -rotate-6 group-hover:-rotate-0 group-hover:top-7 group-hover:left-5 transition-all duration-500 flex justify-between items-center shadow-lg overflow-hidden border-2 border-black">
@@ -89,6 +113,7 @@ export const WebsitesCard = ({
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </div>
       </div>

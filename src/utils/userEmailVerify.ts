@@ -1,4 +1,5 @@
 import { setAccessToken } from "./accessTokenStore";
+import { apiUrl } from "./apiConfig";
 
 export const UserEmailVerify = async (email: string, otp: string) => {
   if (otp.length == 6) {
@@ -6,7 +7,7 @@ export const UserEmailVerify = async (email: string, otp: string) => {
 
     console.log("  ## ");
     const response = await fetch(
-      `http://localhost:8081/api/v1/email-verify?userEmail=${email}&otp=${otp}`,
+      apiUrl(`/api/v1/email-verify?userEmail=${email}&otp=${otp}`),
       {
         method: "GET",
         headers: {

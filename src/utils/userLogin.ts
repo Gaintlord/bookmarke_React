@@ -1,5 +1,6 @@
 import { inputValidation } from "./inputValidation";
 import { setAccessToken } from "../utils/accessTokenStore";
+import { apiUrl } from "./apiConfig";
 export const userLogin = async (
   email: string,
   password: string
@@ -15,7 +16,7 @@ export const userLogin = async (
       err: response.err,
     };
   } else {
-    const response = await fetch("http://localhost:8081/api/v1/login", {
+    const response = await fetch(apiUrl("/api/v1/login"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +40,7 @@ export const userLogin = async (
           ac_tag: resJson.accessToken,
           dr_tag: resJson.dr_tag,
         },
-        "http://localhost:5173"
+        window.location.origin
       );
 
       return {

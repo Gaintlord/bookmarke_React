@@ -1,9 +1,13 @@
+import { Navigate } from "react-router-dom";
 import { HeroSection } from "./components/heroSection";
 import { HomeOverlay } from "./components/homeOverlay";
 
 import { Topbar } from "./components/topbar";
+import { getAccessToken } from "./utils/accessTokenStore";
 
 function App() {
+  if (getAccessToken()) return <Navigate to="/dashboard" replace />;
+
   return (
     <div className="h-screen w-full bg-white flex flex-col">
       {/* Topbarrrrrrr */}
