@@ -1,4 +1,3 @@
-import { getAccessToken } from "./accessTokenStore";
 import { refreshSession } from "./refreshSession";
 import { apiUrl } from "./apiConfig";
 
@@ -18,9 +17,6 @@ export const fetchBookmarksByDomain = async (
   const request = () =>
     fetch(url, {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      },
       credentials: "include",
     });
 

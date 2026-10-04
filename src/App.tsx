@@ -1,12 +1,15 @@
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { HeroSection } from "./components/heroSection";
 import { HomeOverlay } from "./components/homeOverlay";
 
 import { Topbar } from "./components/topbar";
-import { getAccessToken } from "./utils/accessTokenStore";
+import { useSession } from "./utils/useSession";
 
 function App() {
-  if (getAccessToken()) return <Navigate to="/dashboard" replace />;
+  const session = useSession();
+
+  if (session === "ready") return <Navigate to="/dashboard" replace />;
+  if (session === "checking") return null;
 
   return (
     <div className="h-screen w-full bg-white flex flex-col">
@@ -22,6 +25,14 @@ function App() {
         <div className="text-5xl"></div>
         <HeroSection />
         <HomeOverlay />
+        <footer className="absolute bottom-3 left-1/2 z-20 flex -translate-x-1/2 gap-6 font-mono text-xs text-gray-500">
+          <Link className="hover:text-blue-900" to="/privacy">
+            Privacy Policy
+          </Link>
+          <Link className="hover:text-blue-900" to="/terms">
+            Terms of Service
+          </Link>
+        </footer>
       </div>
     </div>
   );

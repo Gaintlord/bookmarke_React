@@ -1,4 +1,3 @@
-import { getAccessToken } from "./accessTokenStore";
 import { refreshSession } from "./refreshSession";
 import { apiUrl } from "./apiConfig";
 
@@ -14,9 +13,6 @@ export const fetchBookmarkSummary = async (): Promise<BookmarkSummary[]> => {
   const request = () =>
     fetch(apiUrl("/api/v1/dashboard/bookmark-summary"), {
       method: "GET",
-      headers: {
-        Authorization: `Bearer ${getAccessToken()}`,
-      },
       credentials: "include",
     });
 

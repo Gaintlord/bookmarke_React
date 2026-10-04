@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 export default function Folder({
   children,
-}: Readonly<{ children?: ReactNode }>) {
+  contentClassName,
+}: Readonly<{ children?: ReactNode; contentClassName?: string }>) {
   return (
     <div className="h-full w-full">
       <div className="absolute z-10 text-white h-full w-full">
@@ -23,7 +24,9 @@ export default function Folder({
             clipPath="url(#folder)"
           />
         </svg>
-        <div className="absolute text-black top-10  m-2">{children}</div>
+        <div className={`absolute text-black ${contentClassName ?? "top-10 m-2"}`}>
+          {children}
+        </div>
       </div>
       <div>
         <div className="absolute z-0 scale-101 h-full w-full blur-xs text-black/50">

@@ -1,4 +1,3 @@
-import { setAccessToken } from "./accessTokenStore";
 import { apiUrl } from "./apiConfig";
 
 let inFlight: Promise<boolean> | null = null;
@@ -8,19 +7,18 @@ export const refreshSession = (): Promise<boolean> => {
 
   inFlight = (async () => {
     try {
-      const response = await fetch(
-        apiUrl("/api/v1/auth/refresh"),
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
+      const response = await fetch(apiUrl("/api/v1/auth/refresh"), {
+        method: "GET",
+        credentials: "include",
+      });
 
       if (!response.ok) return false;
 
+      const contentType = response.headers.get("content-type") ?? "";
+      if (!contentType.includes("application/json")) return false;
+
       const data = (await response.json()) as { accessToken?: string };
-      if (data.accessToken) setAccessToken(data.accessToken);
-      return true;
+      return Boolean(data.accessToken);
     } catch {
       return false;
     } finally {

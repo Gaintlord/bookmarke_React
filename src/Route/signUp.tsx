@@ -6,10 +6,10 @@ import PasswordIcon from "../accets/svgs/passwordIcon";
 import { HomeLogoAncher } from "../components/homeLogoAncher";
 import { SignInOptions } from "../components/signInOptions";
 import GoogleIcon from "../accets/svgs/googleIcon";
+import { GoogleAuth } from "../utils/googleAuth";
 
 import { useRef, useState } from "react";
 import { userSignup } from "../utils/userSignup";
-import { apiUrl } from "../utils/apiConfig";
 import { Link, useNavigate } from "react-router-dom";
 
 export default function SignUp() {
@@ -52,11 +52,6 @@ export default function SignUp() {
         setUserPassError(response.err);
       }
     }
-  };
-
-  const SendUserToOauth = () => {
-    window.location.href = apiUrl("/api/v1/auth/google");
-    console.log("sent to backend");
   };
 
   return (
@@ -133,6 +128,23 @@ export default function SignUp() {
             >
               sign up
             </div>
+            <p className="w-[25%] mt-3 text-center font-mono text-xs leading-5 text-gray-500">
+              By signing up, you agree to our{" "}
+              <Link
+                className="font-bold text-blue-600 underline decoration-blue-200 underline-offset-4 hover:text-blue-800"
+                to="/terms"
+              >
+                Terms of Service
+              </Link>{" "}
+              and{" "}
+              <Link
+                className="font-bold text-blue-600 underline decoration-blue-200 underline-offset-4 hover:text-blue-800"
+                to="/privacy"
+              >
+                Privacy Policy
+              </Link>
+              .
+            </p>
           </div>
           {/*other Signup function  */}
           <div className="flex-2 flex justify-start items-center flex-col ">
@@ -141,14 +153,12 @@ export default function SignUp() {
               <span className="px-3 text-gray-500 text-sm">OR</span>
               <div className="flex-1 border-t border-gray-300"></div>
             </div>
-            <div
-              className="flex w-[25%] cursor-pointer"
-              onClick={() => SendUserToOauth()}
-            >
+            <div className="flex w-[25%]">
               <SignInOptions
                 className=" text-black/75 border-1 border-black/50 cursor-pointer"
                 type="Google"
                 typeIcon={<GoogleIcon />}
+                onClick={GoogleAuth}
               ></SignInOptions>
             </div>
           </div>

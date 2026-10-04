@@ -1,5 +1,4 @@
 import { inputValidation } from "./inputValidation";
-import { setAccessToken } from "../utils/accessTokenStore";
 import { apiUrl } from "./apiConfig";
 export const userLogin = async (
   email: string,
@@ -31,7 +30,6 @@ export const userLogin = async (
     const resJson = await response.json();
 
     if (resJson.status) {
-      setAccessToken(resJson.accessToken);
       console.log("!!!!! message sent!!!!!");
 
       window.postMessage(

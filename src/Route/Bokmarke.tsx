@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Navigate, useNavigate, useSearchParams } from "react-router-dom";
-import { clearAccessToken, getAccessToken } from "../utils/accessTokenStore";
+import { logout } from "../utils/logout";
 import { HomeLogoAncher } from "../components/homeLogoAncher";
 import Listview from "../components/listView/ListView";
 import {
@@ -8,6 +8,7 @@ import {
   type DomainBookmark,
 } from "../utils/domainBookmarks";
 import { getDomainColor } from "../utils/domainColorStore";
+import { useSession } from "../utils/useSession";
 
 const formatAddedOn = (isoDate: string) => {
   const date = new Date(isoDate);
@@ -23,6 +24,7 @@ const formatAddedOn = (isoDate: string) => {
 
 const Bokmarke = () => {
   const navigate = useNavigate();
+  const session = useSession();
   const [searchParams] = useSearchParams();
   const domain = searchParams.get("domain") ?? "";
   const profileMenuRef = useRef<HTMLDivElement>(null);
@@ -43,7 +45,7 @@ const Bokmarke = () => {
   }, []);
 
   useEffect(() => {
-    if (!domain || !getAccessToken()) return;
+    if (!domain || session !== "ready") return;
     let cancelled = false;
     setIsLoading(true);
     setLoadError("");
@@ -56,7 +58,6 @@ const Bokmarke = () => {
       .catch((error: Error & { status?: number }) => {
         if (cancelled) return;
         if (error.status === 401) {
-          clearAccessToken();
           navigate("/Login", { replace: true });
           return;
         }
@@ -69,13 +70,13 @@ const Bokmarke = () => {
     return () => {
       cancelled = true;
     };
-  }, [domain, navigate, reloadKey]);
+  }, [domain, navigate, reloadKey, session]);
 
-  if (!getAccessToken()) return <Navigate to="/Login" replace />;
+  if (session === "missing") return <Navigate to="/Login" replace />;
   if (!domain) return <Navigate to="/dashboard" replace />;
 
-  const logOut = () => {
-    clearAccessToken();
+  const logOut = async () => {
+    await logout();
     navigate("/Login", { replace: true });
   };
 

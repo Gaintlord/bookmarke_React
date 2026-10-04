@@ -7,10 +7,37 @@ import PasswordIcon from "../accets/svgs/passwordIcon";
 import { HomeLogoAncher } from "../components/homeLogoAncher";
 import { SignInOptions } from "../components/signInOptions";
 import GoogleIcon from "../accets/svgs/googleIcon";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { GoogleAuth } from "../utils/googleAuth";
+
+const googleStatusMessages: Record<
+  string,
+  { message: string; className: string }
+> = {
+  google_denied: {
+    message: "Google sign-in was cancelled.",
+    className: "border-amber-200 bg-amber-50 text-amber-800",
+  },
+  google_failed: {
+    message: "We couldn't complete Google sign-in. Please try again.",
+    className: "border-red-200 bg-red-50 text-red-700",
+  },
+  google_unverified: {
+    message: "Your Google email isn't verified, so we can't sign you in.",
+    className: "border-red-200 bg-red-50 text-red-700",
+  },
+};
 
 export default function Login() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const googleError = googleStatusMessages[searchParams.get("status") ?? ""];
+
+  const dismissGoogleError = () => {
+    const nextParams = new URLSearchParams(searchParams);
+    nextParams.delete("status");
+    setSearchParams(nextParams, { replace: true });
+  };
 
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -87,6 +114,21 @@ export default function Login() {
           </div>
           {/* sign Up form */}
           <div className="flex-1 flex flex-col items-center justify-center py-3  ">
+            {googleError && (
+              <div
+                className={`w-[25%] mb-3 flex items-center justify-between gap-3 rounded-md border px-3 py-2 font-mono text-sm ${googleError.className}`}
+              >
+                <span>{googleError.message}</span>
+                <button
+                  className="cursor-pointer text-lg leading-none"
+                  type="button"
+                  aria-label="Dismiss Google sign-in error"
+                  onClick={dismissGoogleError}
+                >
+                  ×
+                </button>
+              </div>
+            )}
             <div className="w-[25%]">
               <ModernInput
                 propRef={emailRef}
@@ -141,6 +183,7 @@ export default function Login() {
                 className=" text-black/75 border-1 border-black/50 cursor-pointer"
                 type="Google"
                 typeIcon={<GoogleIcon />}
+                onClick={GoogleAuth}
               ></SignInOptions>
             </div>
           </div>

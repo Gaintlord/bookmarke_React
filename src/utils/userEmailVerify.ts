@@ -1,11 +1,7 @@
-import { setAccessToken } from "./accessTokenStore";
 import { apiUrl } from "./apiConfig";
 
 export const UserEmailVerify = async (email: string, otp: string) => {
   if (otp.length == 6) {
- 
-
-    console.log("  ## ");
     const response = await fetch(
       apiUrl(`/api/v1/email-verify?userEmail=${email}&otp=${otp}`),
       {
@@ -14,13 +10,12 @@ export const UserEmailVerify = async (email: string, otp: string) => {
           "Content-Type": "application/json",
         },
         credentials: "include",
-      }
+      },
     );
 
     const jsonRes = await response.json();
 
-    if (jsonRes.status == true) {
-      setAccessToken(jsonRes.accessToken);
+    if (jsonRes.status) {
       return true;
     } else {
       return false;

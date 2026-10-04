@@ -36,6 +36,7 @@ export default function VerifyEmail() {
         navigate("/dashboard", { replace: true });
       } else {
         setInputError(true);
+        navigate("/signup", { replace: true });
       }
     } else {
       setInputError(true);

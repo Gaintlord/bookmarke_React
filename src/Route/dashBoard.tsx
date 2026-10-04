@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { WebsitesCard } from "../components/websiteCard/WebsiteCard";
-import { clearAccessToken, getAccessToken } from "../utils/accessTokenStore";
+import { logout } from "../utils/logout";
 import { HomeLogoAncher } from "../components/homeLogoAncher";
 import {
   fetchBookmarkSummary,
@@ -10,6 +10,7 @@ import {
 } from "../utils/dashboardBookmarkSummary";
 import { getDomainColorClass, toColorClass } from "../utils/domainColor";
 import { saveDomainColors } from "../utils/domainColorStore";
+import { useSession } from "../utils/useSession";
 
 type BookmarkCollection = {
   domainName: string;
@@ -41,6 +42,7 @@ const toCollection = (summary: BookmarkSummary): BookmarkCollection => ({
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const session = useSession();
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const [collections, setCollections] = useState<BookmarkCollection[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -63,7 +65,7 @@ const Dashboard = () => {
   }, []);
 
   useEffect(() => {
-    if (!getAccessToken()) return;
+    if (session !== "ready") return;
     let cancelled = false;
     setIsLoading(true);
     setLoadError("");
@@ -77,7 +79,6 @@ const Dashboard = () => {
       .catch((error: Error & { status?: number }) => {
         if (cancelled) return;
         if (error.status === 401) {
-          clearAccessToken();
           navigate("/Login", { replace: true });
           return;
         }
@@ -92,9 +93,9 @@ const Dashboard = () => {
     return () => {
       cancelled = true;
     };
-  }, [navigate, reloadKey]);
+  }, [navigate, reloadKey, session]);
 
-  if (!getAccessToken()) return <Navigate to="/Login" replace />;
+  if (session === "missing") return <Navigate to="/Login" replace />;
 
   const visibleCollections = collections.filter((collection) =>
     collection.domainName
@@ -102,8 +103,8 @@ const Dashboard = () => {
       .includes(searchQuery.trim().toLowerCase()),
   );
 
-  const logOut = () => {
-    clearAccessToken();
+  const logOut = async () => {
+    await logout();
     navigate("/Login", { replace: true });
   };
 
