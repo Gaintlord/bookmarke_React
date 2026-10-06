@@ -89,7 +89,12 @@ const Bokmarke = () => {
     <div className="min-h-screen bg-blue-50 text-blue-950">
       <header className="sticky top-0 z-30 border-b-2 border-blue-100 bg-white/95 shadow-sm backdrop-blur">
         <div className="mx-auto flex min-h-18 max-w-7xl flex-wrap items-center gap-3 px-4 py-3 sm:flex-nowrap sm:px-6">
-          <HomeLogoAncher className="w-30 shrink-0 sm:w-36" disableLink />
+          <div
+            className="cursor-pointer"
+            onClick={() => navigate("/dashboard", { replace: false })}
+          >
+            <HomeLogoAncher className="w-30 shrink-0 sm:w-36" disableLink />
+          </div>
           <label className="relative order-3 w-full sm:order-2 sm:ml-auto sm:max-w-md">
             <span className="sr-only">Search bookmark collections</span>
             <svg

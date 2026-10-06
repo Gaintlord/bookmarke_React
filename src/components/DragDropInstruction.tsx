@@ -113,32 +113,32 @@ export default function DragNDropInstruction() {
   return (
     <section
       aria-labelledby="signup-title"
-      className="relative grid w-full max-w-4xl overflow-hidden rounded-[2rem] bg-white shadow-2xl shadow-slate-900/10 md:h-[34rem] md:grid-cols-[1.05fr_0.95fr]"
+      className="relative grid w-full max-w-4xl overflow-hidden rounded-2xl bg-white shadow-2xl shadow-slate-900/10 h-[28rem] lg:h-[34rem] md:grid-cols-[1.05fr_0.95fr]"
     >
-      <div className="flex flex-col justify-center px-7 py-10 sm:px-12 sm:py-14">
-        <div className="mb-8 flex w-fit items-center gap-2 rounded-full bg-blue-100 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.14em] text-blue-900">
+      <div className="flex flex-col justify-center px-4 py-4 sm:px-5 sm:py-5 md:px-6 md:py-6 lg:px-12 lg:py-14">
+        <div className="mb-3 flex w-fit items-center gap-2 rounded-full bg-blue-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-blue-900 lg:mb-8 lg:px-3 lg:py-1.5 lg:text-xs">
           <span className="h-2 w-2 rounded-full bg-blue-400" />
           Add Link From any Site
         </div>
 
         <p
           aria-level={1}
-          className="max-w-md text-4xl font-black leading-[0.98] tracking-[-0.04em] text-slate-950 sm:text-5xl"
+          className="max-w-md text-xl font-black leading-[0.98] tracking-[-0.04em] text-slate-950 sm:text-2xl md:text-3xl lg:text-5xl"
           id="signup-title"
           role="heading"
         >
           Drag and Drop the Link
         </p>
-        <p className="mt-5 max-w-sm text-base leading-7 text-slate-600">
+        <p className="mt-2 max-w-sm text-xs leading-5 text-slate-600 lg:mt-5 lg:text-base lg:leading-7">
           Grab the link you want to add as a Bokmarke and drag it to the Chest
           and drop
         </p>
 
-        <div className="mt-5 min-h-0 flex-1 overflow-hidden rounded-3xl bg-blue-500 p-3 shadow-lg shadow-blue-500/15">
+        <div className="mt-3 min-h-24 flex-1 overflow-hidden rounded-2xl bg-blue-500 p-2 shadow-lg shadow-blue-500/15 lg:mt-5 lg:min-h-0 lg:rounded-3xl lg:p-3">
           <DeviceCloudGraphic />
         </div>
 
-        <p className="mt-7 text-sm text-slate-500">
+        <p className="mt-3 text-xs text-slate-500 lg:mt-7 lg:text-sm">
           Already have an account?{" "}
           <a
             className="font-bold text-blue-600 underline decoration-blue-200 underline-offset-4 hover:text-blue-800"
@@ -149,13 +149,17 @@ export default function DragNDropInstruction() {
         </p>
       </div>
 
-      <div className="min-h-72 bg-blue-500 sm:min-h-96 md:min-h-full flex items-center justify-center">
+      <div className="min-h-32 bg-blue-500 sm:min-h-40 md:min-h-full flex items-center justify-center">
         <div className="absolute inset-x-0 top-0 h-px bg-white/60" />
         <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full border-[28px] border-white/20" />
         <div className="absolute -bottom-12 right-80 h-40 w-40 rounded-full bg-white/20" />
 
-        <div className="flex items-center justify-center mb-20 mx-5 z-50">
-          <img src="DragNDrop.png" alt="Drag and drop" />
+        <div className="flex items-center justify-center mb-2 mx-2 z-50 lg:mb-20 lg:mx-5">
+          <img
+            src="DragNDrop.png"
+            alt="Drag and drop"
+            className="max-h-28 w-auto sm:max-h-36 lg:max-h-none"
+          />
         </div>
       </div>
     </section>
