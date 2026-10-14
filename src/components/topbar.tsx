@@ -61,7 +61,7 @@ export const Topbar = () => {
 
   const downloadExtension = () => {
     window.location.href =
-      "https://codeload.github.com/Gaintlord/Bokmarke_Extention/zip/refs/heads/master";
+      "https://chromewebstore.google.com/detail/bokmarke/eiafonomeoobojneafhpdejelcoiganl";
   };
 
   return (
